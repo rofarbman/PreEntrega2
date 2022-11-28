@@ -1,4 +1,4 @@
-import viewCart from "./views/cart.js";
+import { viewCart } from "./views/cart.js";
 import viewProducts from "./views/products.js";
 
 let root = document.getElementById("root");

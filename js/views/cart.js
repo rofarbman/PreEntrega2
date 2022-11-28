@@ -7,30 +7,49 @@ const products = JSON.parse(localStorage.getItem("products")) || undefined;
 const quantity = document.getElementById("totalQuantity");
 quantity.innerHTML = `${totalQuantity(cart)}`;
 
-const shop = document.createElement("div");
+const shop = document.createElement("section");
+shop.id = "shop";
 shop.classList =
   "shop container-fluid mb-5 d-flex flex-column align-items-center justify-content-center text-center";
 
-if (cart.length == 0) {
-  shop.innerHTML = `<h2>TU CARRITO ESTA VACIO</h2>
-  <button id="btnToProducts" type="button" class="btn btn--mina">Volver a la tienda</button>`;
-} else {
-  shop.classList =
-    "vh-auto container d-flex flex-column align-items-center justify-content-evenly text-center mb-4";
-  let table = document.createElement("table");
-  table.classList = "table table-striped";
-  table.innerHTML = `<thead>
-  <tr>
-    <th scope="col">PRODUCTO</th>
-    <th scope="col">PRECIO</th>
-    <th scope="col">CANTIDAD</th>
-    <th scope="col">SUBTOTAL</th>
-  </tr>
-  </thead>
-  <tbody id="tbody">
-  </tbody>
-  `;
-  shop.append(table);
+let cartLength = cart.length;
+
+let table = document.createElement("table");
+
+if (shop) {
+  if (cartLength < 1) {
+    shop.innerHTML = `<h2>TU CARRITO ESTA VACIO</h2>
+    <button id="btnToProducts" type="button" class="btn btn--mina">Volver a la tienda</button>`;
+  } else {
+    shop.classList =
+      "vh-auto container-fluid d-flex flex-column align-items-center justify-content-evenly mb-4";
+    table.id = "table";
+    table.classList = "table table-striped";
+    table.innerHTML = `<thead id="thead">
+    <tr>
+      <th scope="col">PRODUCTO</th>
+      <th scope="col">PRECIO</th>
+      <th scope="col">CANTIDAD</th>
+      <th scope="col">SUBTOTAL</th>
+    </tr>
+    </thead><tbody id="tbody"></tbody>`;
+
+    shop.append(table);
+  }
+}
+
+let tbody = document.createElement("tbody");
+cart.forEach((item) => {
+  return (tbody.innerHTML += `<tr id="tr-${item.id}" class="align-middle">
+      <td class="text-start"><button id="drop-${item.id}" type="button" class="btn btn--mina ms-2">&times;</button><img src="${item.thumbnail}" alt="${item.name}" height="150px" class="rounded-3 ms-4"><span>${item.name}</span></td>
+      <td><span>$${item.price}</span></td>
+      <td><button id="sub-${item.id}" class="btn btn--mina">&bigtriangledown;</button><input id="q-${item.id}" class="inputQuantity" type="text" placeholder="0"><button id="add-${item.id}" class="btn btn--mina">&bigtriangleup;</button></td>
+      <td>4</td>
+    </tr>`);
+});
+
+if (table) {
+  table.append(tbody);
 }
 
 document.addEventListener("click", (e) => {
@@ -42,4 +61,4 @@ document.addEventListener("click", (e) => {
 let viewCart = document.createElement("section");
 viewCart.append(shop);
 
-export default viewCart;
+export { viewCart };
