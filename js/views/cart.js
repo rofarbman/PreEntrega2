@@ -1,4 +1,5 @@
 import { totalQuantity } from "../utils.js";
+import viewProducts from "./products.js";
 
 const cart = JSON.parse(sessionStorage.getItem("cart")) || undefined;
 const products = JSON.parse(localStorage.getItem("products")) || undefined;
@@ -31,6 +32,12 @@ if (cart.length == 0) {
   `;
   shop.append(table);
 }
+
+document.addEventListener("click", (e) => {
+  e.target.id == "btnToProducts"
+    ? root.replaceChild(viewProducts, viewCart)
+    : undefined;
+});
 
 let viewCart = document.createElement("section");
 viewCart.append(shop);
