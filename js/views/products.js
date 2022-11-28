@@ -1,3 +1,6 @@
+import { addToCart } from "../utils.js";
+
+const cart = JSON.parse(sessionStorage.getItem("cart"));
 const products = JSON.parse(localStorage.getItem("products"));
 
 const card = document.createElement("div");
@@ -29,6 +32,10 @@ cardsContainer.classList =
 
 cardsContainer.append(card);
 section.append(cardsContainer);
+
+document.addEventListener("click", (e) => {
+  addToCart(e.target.id, products, cart);
+});
 
 const viewProducts = section;
 export default viewProducts;
