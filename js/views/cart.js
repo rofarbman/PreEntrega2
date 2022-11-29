@@ -1,4 +1,4 @@
-import { totalQuantity } from "../utils.js";
+import { productQuantity, totalQuantity } from "../utils.js";
 import viewProducts from "./products.js";
 
 const cart = JSON.parse(sessionStorage.getItem("cart")) || undefined;
@@ -22,7 +22,7 @@ if (shop) {
     <button id="btnToProducts" type="button" class="btn btn--mina">Volver a la tienda</button>`;
   } else {
     shop.classList =
-      "vh-auto container-fluid d-flex flex-column align-items-center justify-content-evenly mb-4";
+      "vh-auto container d-flex flex-column align-items-center justify-content-evenly mb-4";
     table.id = "table";
     table.classList = "table table-striped";
     table.innerHTML = `<thead id="thead">
@@ -39,12 +39,31 @@ if (shop) {
 }
 
 let tbody = document.createElement("tbody");
-cart.forEach((item) => {
+
+let cartUniqueProduct = [
+  ...cart
+    .reduce((products, item) => products.set(item.id, item), new Map())
+    .values(),
+];
+
+cartUniqueProduct.forEach((item) => {
   return (tbody.innerHTML += `<tr id="tr-${item.id}" class="align-middle">
-      <td class="text-start"><button id="drop-${item.id}" type="button" class="btn btn--mina ms-2">&times;</button><img src="${item.thumbnail}" alt="${item.name}" height="150px" class="rounded-3 ms-4"><span>${item.name}</span></td>
+      <td class="text-start"><button id="drop-${
+        item.id
+      }" type="button" class="btn btn--mina ms-2">&times;</button><img src="${
+    item.thumbnail
+  }" alt="${item.name}" height="150px" class="rounded-3 ms-4"><span>${
+    item.name
+  }</span></td>
       <td><span>$${item.price}</span></td>
-      <td><button id="sub-${item.id}" class="btn btn--mina">&bigtriangledown;</button><input id="q-${item.id}" class="inputQuantity" type="text" placeholder="0"><button id="add-${item.id}" class="btn btn--mina">&bigtriangleup;</button></td>
-      <td>4</td>
+      <td><button id="sub-${
+        item.id
+      }" class="btn btn--mina">&bigtriangledown;</button><input id="q-${
+    item.id
+  }" class="inputQuantity" type="text" placeholder="0"><button id="add-${
+    item.id
+  }" class="btn btn--mina">&bigtriangleup;</button></td>
+      <td>${productQuantity(item, cart)}</td>
     </tr>`);
 });
 

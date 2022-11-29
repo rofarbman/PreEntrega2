@@ -1,4 +1,9 @@
-import { addToCart } from "../utils.js";
+import {
+  addToCart,
+  btnAddToCartDisabled,
+  checkCart,
+  checkQuantity,
+} from "../utils.js";
 
 const cart = JSON.parse(sessionStorage.getItem("cart"));
 const products = JSON.parse(localStorage.getItem("products"));
@@ -34,7 +39,10 @@ cardsContainer.append(card);
 section.append(cardsContainer);
 
 document.addEventListener("click", (e) => {
-  addToCart(e.target.id, products, cart);
+  checkQuantity(cart);
+  addToCart(e.target.id, products, cart),
+    btnAddToCartDisabled(e.target.id),
+    checkQuantity(cart);
 });
 
 const viewProducts = section;

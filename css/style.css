@@ -71,7 +71,14 @@ body {
 .servicios__img {
   border-radius: 1em 1em 0 0; }
 
-.card--bg, .servicios__card, .form__bg {
+.inputQuantity {
+  width: 4em;
+  padding: 0.5em;
+  border-radius: 0.4em;
+  text-align: center;
+  border: none; }
+
+.card--bg, .servicios__card {
   background: #e6e6fa; }
 
 /* servicios */
@@ -99,6 +106,10 @@ body {
   background-color: #e6e6fa;
   color: #0000008c;
   user-select: none; }
+
+.shop {
+  min-height: 75vh;
+  width: 80vw; }
 
 /* utilities */
 /* color map */
