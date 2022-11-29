@@ -75,6 +75,7 @@ function addButtonTriangle(id, productsArray = [], cartArray = []) {
       cartArray
     )}</span>`;
   }
+  totalCart(cartArray);
 }
 
 function subButtonTriangle(id, productsArray = [], cartArray = []) {

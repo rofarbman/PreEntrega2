@@ -92,7 +92,6 @@ if (table) {
 document.addEventListener("click", (e) => {
   addButtonTriangle(e.target.id, products, cart);
   subButtonTriangle(e.target.id, products, cart);
-  totalCart(cart);
 });
 
 document.addEventListener("click", (e) => {
@@ -100,6 +99,8 @@ document.addEventListener("click", (e) => {
     ? root.replaceChild(viewProducts, viewCart)
     : undefined;
 });
+
+totalCart(cart);
 
 let viewCart = document.createElement("section");
 viewCart.append(shop);
