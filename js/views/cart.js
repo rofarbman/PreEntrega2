@@ -1,4 +1,11 @@
-import { productQuantity, totalQuantity } from "../utils.js";
+import {
+  productQuantity,
+  totalQuantity,
+  subtotal,
+  addButtonTriangle,
+  subButtonTriangle,
+  totalCart,
+} from "../utils.js";
 import viewProducts from "./products.js";
 
 const cart = JSON.parse(sessionStorage.getItem("cart")) || undefined;
@@ -21,8 +28,9 @@ if (shop) {
     shop.innerHTML = `<h2>TU CARRITO ESTA VACIO</h2>
     <button id="btnToProducts" type="button" class="btn btn--mina">Volver a la tienda</button>`;
   } else {
+    shop.innerHTML = "<h1>CARRITO</h1>";
     shop.classList =
-      "vh-auto container d-flex flex-column align-items-center justify-content-evenly mb-4";
+      "vh-auto container d-flex flex-column align-items-center justify-content-evenly m-4";
     table.id = "table";
     table.classList = "table table-striped";
     table.innerHTML = `<thead id="thead">
@@ -35,6 +43,11 @@ if (shop) {
     </thead><tbody id="tbody"></tbody>`;
 
     shop.append(table);
+    let total = document.createElement("section");
+    total.innerHTML = `<h1>TOTAL A PAGAR</h1>
+    <h2>El total es: ${totalCart(cart)}</h2>`;
+    total.classList = "m-4";
+    shop.append(total);
   }
 }
 
@@ -60,16 +73,27 @@ cartUniqueProduct.forEach((item) => {
         item.id
       }" class="btn btn--mina">&bigtriangledown;</button><input id="q-${
     item.id
-  }" class="inputQuantity" type="text" placeholder="0"><button id="add-${
+  }" class="inputQuantity" type="text" value="${productQuantity(
+    item,
+    cart
+  )}"><button id="add-${
     item.id
   }" class="btn btn--mina">&bigtriangleup;</button></td>
-      <td>${productQuantity(item, cart)}</td>
+      <td>
+        <span id="subtotal-${item.id}">${subtotal(item, cart)}</span>
+      </td>
     </tr>`);
 });
 
 if (table) {
   table.append(tbody);
 }
+
+document.addEventListener("click", (e) => {
+  addButtonTriangle(e.target.id, products, cart);
+  subButtonTriangle(e.target.id, products, cart);
+  totalCart(cart);
+});
 
 document.addEventListener("click", (e) => {
   e.target.id == "btnToProducts"
